@@ -1,6 +1,6 @@
 # Cosmos Chain [![Build Status](https://travis-ci.org/elidoran/cosmos-chain.svg?branch=master)](https://travis-ci.org/elidoran/cosmos-chain)
 
-Maintain ordered chains of actions.
+Maintain ordered chains of actions in a Meteor app.
 
 ## Install
 
