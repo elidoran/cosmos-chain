@@ -1,0 +1,23 @@
+{
+  "dependencies": {
+    "chain-builder": {
+      "version": "0.6.2",
+      "dependencies": {
+        "had": {
+          "version": "0.6.1"
+        }
+      }
+    },
+    "ordering": {
+      "version": "0.4.1",
+      "dependencies": {
+        "had": {
+          "version": "0.6.1"
+        },
+        "needier": {
+          "version": "0.4.0"
+        }
+      }
+    }
+  }
+}
