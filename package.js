@@ -1,6 +1,6 @@
 Package.describe({
   name: 'cosmos:chain',
-  version: '0.2.0',
+  version: '0.2.3',
   summary: 'Maintain ordered chains of actions',
   git: 'http://github.com/elidoran/cosmos-chain',
   documentation: 'README.md'
@@ -15,7 +15,7 @@ Npm.depends({
 Package.onUse(function(api) {
   api.versionsFrom('1.2');
 
-  api.use('cosmos:browserify@0.7.2', 'client');
+  api.use('cosmos:browserify@0.8.0', 'client');
 
   api.use(['coffeescript@1.0.10'], ['client', 'server']);
 
@@ -29,7 +29,7 @@ Package.onUse(function(api) {
 Package.onTest(function(api) {
   api.use(['tinytest', 'coffeescript@1.0.10']);
 
-  api.use('cosmos:chain@0.2.0');
+  api.use('cosmos:chain@0.2.3');
 
   api.addFiles([
     'test/chain-tests.coffee'
