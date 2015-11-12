@@ -1,2 +1,2 @@
-builder = require('chain-builder');
+buildChain = require('chain-builder');
 ordering = require('ordering');
