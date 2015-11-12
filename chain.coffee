@@ -4,9 +4,10 @@ class Chain
     # build a chain to use
     @_chain = buildChain()
     # we want to reorder the chain's array when fn's are added/removed
-    reorder = @_reorder.bind this
-    @_chain.on 'add', reorder
-    @_chain.on 'remove', reorder
+    # phantomjs disliked my using: reorder = @_reorder.bind(this), so, use self:
+    self = this
+    @_chain.on 'add', -> self._reorder()
+    @_chain.on 'remove', -> self._reorder()
     # same as for chain-builder above.
     @_orderer  = ordering ? Npm.require 'ordering'
 
