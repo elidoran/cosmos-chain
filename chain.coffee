@@ -1,7 +1,3 @@
-# client has `buildChain` browserified, server uses Npm.require
-buildChain ?= Npm.require 'chain-builder'
-
-# let's add Ordering to the array
 class Chain
 
   constructor: () ->
@@ -9,8 +5,8 @@ class Chain
     @_chain = buildChain()
     # we want to reorder the chain's array when fn's are added/removed
     reorder = @_reorder.bind this
-    @_chain.on 'add', -> reorder
-    @_chain.on 'remove', -> reorder
+    @_chain.on 'add', reorder
+    @_chain.on 'remove', reorder
     # same as for chain-builder above.
     @_orderer  = ordering ? Npm.require 'ordering'
 
