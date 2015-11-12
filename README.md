@@ -9,13 +9,9 @@ Maintain ordered chains of actions in a Meteor app.
 
 ## API
 
-### new Chain(options)
+### new Chain()
 
 Create a chain instance which will maintain actions in order as they are added/removed.
-
-Options:
-
-1. `type`: `chain` or `pipeline` depending on which kind of actions you want. See [chain-builder module](http://www.npmjs.com/package/chain-builder) for more information on the difference between the two types.
 
 ### chain.add(fn)
 
