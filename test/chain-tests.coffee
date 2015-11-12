@@ -15,7 +15,7 @@ Tinytest.add 'test single function executes', (test) ->
 
   ran = false
 
-  fn1 = (ctx) -> ran = true
+  fn1 = -> ran = true
 
   chain.add fn1
 
@@ -24,13 +24,27 @@ Tinytest.add 'test single function executes', (test) ->
   test.equal ran, true, 'chain execution should cause fn1 to set ran to true'
 
 
-Tinytest.add 'test single function using context', (test) ->
+Tinytest.add 'test single function using context via this', (test) ->
 
   chain = new Chain()
 
   context = ran:false
 
-  fn1 = (ctx) -> ctx.ran = true
+  fn1 = -> this.ran = true
+
+  chain.add fn1
+
+  chain.execute context
+
+  test.equal context.ran, true, 'chain execution should cause fn1 to set context.ran to true'
+
+Tinytest.add 'test single function using context via context var', (test) ->
+
+  chain = new Chain()
+
+  context = ran:false
+
+  fn1 = (_, ctx) -> ctx.ran = true
 
   chain.add fn1
 
@@ -45,10 +59,10 @@ Tinytest.add 'test two functions executing', (test) ->
 
   context = ran1:false, ran2:false
 
-  fn1 = (ctx) -> ctx.ran1 = true
+  fn1 = -> this.ran1 = true
   fn1.options = id:'fn1'
 
-  fn2 = (ctx) -> ctx.ran2 = true
+  fn2 = -> this.ran2 = true
   fn2.options = id:'fn2'
 
   chain.add fn1
@@ -66,14 +80,18 @@ Tinytest.add 'test two functions executing in order (before)', (test) ->
 
   context = ran1:false, ran2:false
 
-  fn1 = (ctx) -> ctx.ran1 = true ; ctx.second = ctx.ran2
+  fn1 = -> this.ran1 = true ; this.second = this.ran2
   fn1.options = id:'fn1'
 
-  fn2 = (ctx) -> ctx.ran2 = true
+  fn2 = -> this.ran2 = true
   fn2.options = id:'fn2', before:['fn1']
 
   chain.add fn1
   chain.add fn2
+
+  test.equal chain._chain.array.length, 2
+  test.equal chain._chain.array[0], fn2
+  test.equal chain._chain.array[1], fn1
 
   chain.execute context
 
@@ -88,14 +106,18 @@ Tinytest.add 'test two functions executing in order (after)', (test) ->
 
   context = ran1:false, ran2:false
 
-  fn1 = (ctx) -> ctx.ran1 = true ; ctx.second = ctx.ran2
+  fn1 = -> this.ran1 = true ; this.second = this.ran2
   fn1.options = id:'fn1', after:['fn2']
 
-  fn2 = (ctx) -> ctx.ran2 = true
+  fn2 = -> this.ran2 = true
   fn2.options = id:'fn2'
 
   chain.add fn1
   chain.add fn2
+
+  test.equal chain._chain.array.length, 2
+  test.equal chain._chain.array[0], fn2
+  test.equal chain._chain.array[1], fn1
 
   chain.execute context
 
@@ -110,14 +132,18 @@ Tinytest.add 'test two functions executing in order (complementary before/after)
 
   context = ran1:false, ran2:false
 
-  fn1 = (ctx) -> ctx.ran1 = true ; ctx.second = ctx.ran2
+  fn1 = -> this.ran1 = true ; this.second = this.ran2
   fn1.options = id:'fn1', after:['fn2']
 
-  fn2 = (ctx) -> ctx.ran2 = true
+  fn2 = -> this.ran2 = true
   fn2.options = id:'fn2', before:['fn1']
 
   chain.add fn1
   chain.add fn2
+
+  test.equal chain._chain.array.length, 2
+  test.equal chain._chain.array[0], fn2, 'fn2 should be first in the array'
+  test.equal chain._chain.array[1], fn1, 'fn1 should be second in the array'
 
   chain.execute context
 
