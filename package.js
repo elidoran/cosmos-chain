@@ -1,6 +1,6 @@
 Package.describe({
   name: 'cosmos:chain',
-  version: '0.4.0',
+  version: '0.4.1',
   summary: 'Maintain ordered chains of actions',
   git: 'http://github.com/elidoran/cosmos-chain',
   documentation: 'README.md'
